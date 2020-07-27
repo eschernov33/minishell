@@ -1,30 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   start_echo.c                                       :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/07/27 15:03:37 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 22:20:06 by gjessica         ###   ########.fr       */
+/*   Created: 2020/04/30 17:01:42 by gjessica          #+#    #+#             */
+/*   Updated: 2020/07/27 17:33:02 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int start_echo(char *line, char **envr)
+char	*ft_strchr(const char *s, int c)
 {
-	char *prt;
+	unsigned char	ch;
+	unsigned int	i;
 
-	prt = ft_strdup((line + skip_whitespace(line)));
-	correct_echo_msg(&prt, envr);
-	if (start_with(prt, "-n"))
-		ft_putstr((prt + 2 + skip_whitespace(prt)));
-	else
+	ch = (unsigned char)c;
+	i = 0;
+	if (s == NULL)
+		return (NULL);
+	while (s[i])
 	{
-		ft_putstr((prt + skip_whitespace(prt)));
-		ft_putstr("\n");
+		if (s[i] == ch)
+			return (char*)(s + i);
+		i++;
 	}
-	free(prt);
-	return (0);
+	if (ch == '\0' && s[i] == '\0')
+		return (char*)(s + i);
+	return (NULL);
 }

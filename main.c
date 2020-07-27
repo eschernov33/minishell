@@ -6,7 +6,7 @@
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 11:22:07 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 15:20:34 by gjessica         ###   ########.fr       */
+/*   Updated: 2020/07/27 23:46:44 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,13 @@ char *read_line()
 
 void print_pre_command()
 {
+	ft_putstr("\x1b[1;4;32m");
 	ft_putstr("minishell:");
+	ft_putstr("\x1b[0m");
+	ft_putstr("\x1b[1;36m");
 	ft_putstr(get_cur_path());
 	ft_putstr("> ");
+	ft_putstr("\x1b[0m");
 }
 
 int launch_commands(char *line, char **envp)
@@ -45,13 +49,13 @@ int launch_commands(char *line, char **envp)
 			if (cmds[i]->cmd == PWD)
 				start_pwd(cmds[i]->str); // complete
 			else if (cmds[i]->cmd == UNKNOWN)
-				start_unknown_cmd(cmds[i]->str); // complete
+				start_unknown_cmd(cmds[i]->str, envp); // complete
 			else if (cmds[i]->cmd == ECHO)
-				start_echo(cmds[i]->str); // Add '' "" $
+				start_echo(cmds[i]->str, envp); // Add '' "" $
 			else if (cmds[i]->cmd == CD)
-				start_cd(cmds[i]->str);
+				start_cd(cmds[i]->str, envp);
 			else if (cmds[i]->cmd == EXPORT)
-				start_export(cmds[i]->str);
+				start_export(cmds[i]->str, envp);
 			else if (cmds[i]->cmd == UNSET)
 				start_unset(cmds[i]->str);
 			else if (cmds[i]->cmd == ENV)// complete
@@ -62,12 +66,13 @@ int launch_commands(char *line, char **envp)
 			free(cmds[i]);
 			i++;
 			if (status == -1)
-				{
+			{
 				free(cmds);
 				return (-1);
-				}
+			}
 		}
 		free(cmds);
+		cmds = NULL;
 	}
 	return(0);
 }

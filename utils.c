@@ -6,11 +6,23 @@
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 11:30:44 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 14:35:43 by gjessica         ###   ########.fr       */
+/*   Updated: 2020/07/27 22:21:59 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char *get_line_env(char **env, char *param)
+{
+	while (*env)
+	{
+	//	printf("%s\n", *env);
+		if (start_with_nospace(*env, param))
+			return (*env);
+		env++;
+	}
+	return NULL;
+}
 
 int ft_putstr(char *s)
 {
@@ -37,6 +49,22 @@ int skip_non_printale(char *str)
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
 	return (i);
+}
+
+int start_with_nospace(char *str, char *con)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return(0);
+	while (str[i] && con[i])
+	{
+		if (str[i] != con[i])
+			return(0);
+		i++;
+	}
+	return (1);
 }
 
 int start_with(char *str, char *con)

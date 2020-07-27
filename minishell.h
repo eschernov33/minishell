@@ -6,7 +6,7 @@
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 11:08:52 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 15:17:42 by gjessica         ###   ########.fr       */
+/*   Updated: 2020/07/27 22:34:24 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,25 @@ char		*ft_itoa(int n);
 char *ft_strcdup(char *str, char c);
 int skip_non_printale(char *str);
 int start_with(char *str, char *con);
+int start_with_nospace(char *str, char *con);
 int skip_whitespace(char *str);
 char *get_cur_path();
 int start_pwd(char *line);
-int start_echo(char *line);
-int start_unknown_cmd(char *line);
-int start_cd(char *line);
-int start_export(char *line);
+int start_echo(char *line, char **envr);
+int start_unknown_cmd(char *line, char **env);
+int start_cd(char *line, char **env);
 int start_unset(char *line);
 int start_env(char *line, char **envp);
+int start_export(char *line, char **envp);
+char *get_line_env(char **env, char *param);
+int ft_len_to_char(char *str, char end);
+char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strchr(const char *s, int c);
+char			**ft_split(char const *s, char c);
+char *correct_echo_msg(char **str, char **envr);
+int		ft_strcmp(const char *s1, const char *s2);
+
 
 /*
 * GET NEXT LINE
