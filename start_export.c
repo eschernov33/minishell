@@ -6,7 +6,7 @@
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/27 15:05:30 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 23:35:05 by gjessica         ###   ########.fr       */
+/*   Updated: 2020/07/28 16:46:03 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,86 @@ void sort_and_show(char **envp)
 	}
 }
 
+void remove_key(char *key, char **envp)
+{
+
+}
+
+void add_or_replace(char *key, char *value, char **envp)
+{
+	// envp = //выглядит так
+	// 	PATH=ghjghjg
+	// 	KEY=kkljklj
+	// 	PATH_1=jkljlk
+	// 	KEY2=jknjkn
+	// key = z // если в списке envp нет такого ключа, тогда
+	// value = 123 // ему через равно без пробелов присвоить значение и добавить в конец envp
+	// key = PATH // если есть, то значение ключа поменять на value
+
+}
+
+void parse_and_add(char *line, char **envp)
+{
+	int i;
+	int start_key;
+	int start_val;
+	int end_key;
+	int end_val;
+	i=0;
+	start_key = -1;
+	start_val = -1;
+	end_key = -1;
+	end_val = -1;
+	i = skip_whitespace(line);
+	//printf("%s %d\n", line, i);
+	while (line[i])
+	{
+		if (start_key == -1 && line[i] != '=')
+			start_key = i;
+		else if (end_key == -1 && (line[i] == '=')  && i > 0)
+			end_key = i;
+		else if (start_key != -1 && end_key != -1 && start_val == -1 && i > 0 && line[i-1] == '=')
+			start_val = i;
+		else if (start_key != -1 && end_key != -1 && start_val != -1 && line[i] == ' ')
+			end_val = i;
+		else if (start_key > -1 && end_key == -1 && line[i] == ' ')
+		{
+			printf ("minishell: bad assignment\n");
+			start_key = -1;
+			start_val = -1;
+			end_key = -1;
+			end_val = -1;
+		}
+		i++;
+	//	printf("%d, %d, %d, %d\n",start_key, end_key, start_val, end_val);
+		if (start_key > -1 && end_key > -1 && start_val > -1 && end_val > -1)
+		{
+
+		//	printf("NEW_PARAM\n");
+			printf ("%s = %s\n", ft_substr((line), start_key, end_key-start_key), ft_substr(line, start_val, end_val - start_val));
+			start_key = -1;
+			start_val = -1;
+			end_key = -1;
+			end_val = -1;
+			i += skip_whitespace(line + i);
+		}
+	}
+	if (start_key > -1 && end_key > -1 && start_val > -1 && end_val == -1)
+	{
+		end_val = i;
+		printf ("%s = %s\n", ft_substr((line), start_key, end_key-start_key), ft_substr(line, start_val, end_val - start_val));
+	}
+
+}
+
 int start_export(char *line, char **envp)
 {
 	if (!line || !line[skip_whitespace(line)])
 	{
 		sort_and_show(envp);
 	}
-	//else if
+	else
+		parse_and_add(line, envp);
 
 
 

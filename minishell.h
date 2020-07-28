@@ -6,7 +6,7 @@
 /*   By: gjessica <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/23 11:08:52 by gjessica          #+#    #+#             */
-/*   Updated: 2020/07/27 22:34:24 by gjessica         ###   ########.fr       */
+/*   Updated: 2020/07/28 13:01:06 by gjessica         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@
 # include <fcntl.h>
 #include <stdio.h>
 #include <limits.h>
+#include <signal.h>
+#include <errno.h>
+#include <sys/stat.h>
 
 # define FDS 14000
 
